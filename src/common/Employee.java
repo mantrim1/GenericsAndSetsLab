@@ -1,10 +1,11 @@
 package common;
 
 import java.util.*;
+import org.apache.commons.lang3.builder.CompareToBuilder;
 
-public class Employee {
-    private String lastName;
+public class Employee implements Comparable {
     private String firstName;
+    private String lastName;
     private String ssn;
 
     @Override
@@ -31,12 +32,12 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" + "last Name=" + lastName + ", first Name=" + firstName + ", ssn=" + ssn + '}';
+        return "Employee{" + "last Name=" + firstName + ", first Name=" + lastName + ", ssn=" + ssn + '}';
     }
     
     public Employee(String lastName, String firstName, String ssn) {
-        this.lastName = lastName;
-        this.firstName = firstName;
+        this.firstName = lastName;
+        this.lastName = firstName;
         this.ssn = ssn;
     }
 
@@ -50,19 +51,28 @@ public class Employee {
 
 
     public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
         return lastName;
     }
 
+    public void setFirstName(String firstName) {
+        this.lastName = firstName;
+    }
+
+    public String getLastName() {
+        return firstName;
+    }
+
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.firstName = lastName;
+    }
+
+    @Override
+    public int compareTo(Object other) {
+        Employee o = (Employee)other;
+        
+        return new CompareToBuilder()
+               .append(this.ssn, o.ssn)
+               .toComparison();
     }
 
 
